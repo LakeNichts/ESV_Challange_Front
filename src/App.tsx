@@ -1,4 +1,4 @@
-import ListGroup from "./componets/ListGroups";
+// import ListGroup from "./componets/ListGroups";
 import Note from "./componets/Note";
 import "./App.css";
 
