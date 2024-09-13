@@ -115,3 +115,7 @@ body {
   top: -8px;
   margin-right: 8px;
 }
+
+.endp{
+  right: 8px !important;
+}
