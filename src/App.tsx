@@ -1,5 +1,6 @@
-// import ListGroup from "./componets/ListGroups";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Note from "./componets/Note";
+import NoteDetail from "./componets/NoteDetail";
 import "./App.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -7,19 +8,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 function App() {
-  // let items = ["nota 1", "nota 2", "nota 3", "nota 4"];
-  // const handleSelectedItem = (item: string) => {
-  //   console.log(item);
-  // };
-
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ListGroup
-        items={items}
-        heading="Cities"
-        onSelectedItem={handleSelectedItem}
-      /> */}
-      <Note />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Note />} />
+          <Route path="/note/:id" element={<NoteDetail />} />
+        </Routes>
+      </Router>
     </QueryClientProvider>
   );
 }
