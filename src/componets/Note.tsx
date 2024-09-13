@@ -125,7 +125,7 @@ function Note() {
                 {/* Mostrar "archivado" si is_archived es true */}
                 {note.is_archived && (
                   <span className="badge bg-warning position-absolute top-0 end-0 m-2">
-                    ARCHIVE
+                    ARCHIVED
                   </span>
                 )}
                 <p>{note.content}</p>
@@ -153,6 +153,12 @@ function Note() {
             +
           </button>
         </div>
+      </div>
+      {/* Fecha de creación en la parte inferior derecha */}
+      <div className="position-absolute bottom-0 end-0 m-2">
+        <a href="https://www.linkedin.com/in/jorge-rojas-l%C3%B3pez-net-developer/">
+          By: Jorge Rojas
+        </a>
       </div>
     </div>
   );
