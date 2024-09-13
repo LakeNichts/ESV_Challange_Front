@@ -20,7 +20,7 @@ function NoteCreate() {
   // Mutación para el POST de la nota
   const postNoteMutation = useMutation({
     mutationFn: (newNote: nota) => {
-      return fetch("http://localhost:3000/notes", {
+      return fetch(`${import.meta.env.VITE_API_BASE_URL}/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,9 @@ function NoteCreate() {
   const { isPending, error, data } = useQuery({
     queryKey: ["tags"],
     queryFn: () =>
-      fetch("http://localhost:3000/tags").then((res) => res.json()),
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/tags`).then((res) =>
+        res.json()
+      ),
   });
 
   if (isPending) return "Loading...";

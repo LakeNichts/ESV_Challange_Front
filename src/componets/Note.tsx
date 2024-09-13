@@ -30,7 +30,9 @@ function Note() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:3000/notes").then((res) => res.json()),
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/notes`).then((res) =>
+        res.json()
+      ),
   });
 
   if (isLoading) return "Loading...";

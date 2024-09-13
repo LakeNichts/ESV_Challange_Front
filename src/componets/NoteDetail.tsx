@@ -25,14 +25,18 @@ function NoteDetail() {
   const { isLoading, isError, data } = useQuery<Note>({
     queryKey: ["note", id],
     queryFn: () =>
-      fetch(`http://localhost:3000/notes/${id}`).then((res) => res.json()),
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/notes/${id}`).then((res) =>
+        res.json()
+      ),
   });
 
   // Fetch para obtener todas las etiquetas
   const { data: allTags } = useQuery<tagsi[]>({
     queryKey: ["tags"],
     queryFn: () =>
-      fetch("http://localhost:3000/tags").then((res) => res.json()),
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/tags`).then((res) =>
+        res.json()
+      ),
   });
 
   // Sincronizar el estado local con el contenido del servidor
@@ -47,7 +51,7 @@ function NoteDetail() {
   const updateNoteMutation = useMutation({
     mutationFn: (updatedNote: Partial<Note>) => {
       console.log("updatedNote", updatedNote);
-      return fetch(`http://localhost:3000/notes/${id}`, {
+      return fetch(`${import.meta.env.VITE_API_BASE_URL}/notes/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +67,7 @@ function NoteDetail() {
   // Mutación para eliminar la nota
   const deleteNoteMutation = useMutation({
     mutationFn: () => {
-      return fetch(`http://localhost:3000/notes/${id}`, {
+      return fetch(`${import.meta.env.VITE_API_BASE_URL}/notes/${id}`, {
         method: "DELETE",
       });
     },
