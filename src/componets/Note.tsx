@@ -7,6 +7,7 @@ interface nota {
   content: string;
   tags: tagsi[];
   is_archived: boolean;
+  created_at: string; // Nueva propiedad para la fecha de creación
 }
 
 interface tagsi {
@@ -40,13 +41,20 @@ function Note() {
   if (error) return "An error has occurred: " + (error as Error).message;
 
   // Filtrar las notas: solo mostrar archivadas o no archivadas dependiendo del estado del toggle
-  const filteredNotes = data.filter((note: nota) => {
-    const matchesCategory = selectedCategory
-      ? note.tags.some((tag) => tag.id === selectedCategory)
-      : true; // Si no hay categoría seleccionada, mostrar todas las notas
-    const matchesArchived = showArchived ? note.is_archived : !note.is_archived; // Mostrar archivadas o no archivadas según el toggle
-    return matchesCategory && matchesArchived;
-  });
+  const filteredNotes = data
+    .filter((note: nota) => {
+      const matchesCategory = selectedCategory
+        ? note.tags.some((tag) => tag.id === selectedCategory)
+        : true; // Si no hay categoría seleccionada, mostrar todas las notas
+      const matchesArchived = showArchived
+        ? note.is_archived
+        : !note.is_archived; // Mostrar archivadas o no archivadas según el toggle
+      return matchesCategory && matchesArchived;
+    })
+    .sort(
+      (a: nota, b: nota) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    ); // Ordenar por fecha de creación, más reciente primero
 
   // Filtrar las categorías únicas usando Set y asegurando el tipo correcto
   const uniqueTags: tagsi[] = [
@@ -113,7 +121,13 @@ function Note() {
         {filteredNotes.map((note: nota) => (
           <div key={note.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
             <div className="post-it" onClick={() => handleClick(note.id)}>
-              <div className="sticky taped">
+              <div className="sticky taped position-relative">
+                {/* Mostrar "archivado" si is_archived es true */}
+                {note.is_archived && (
+                  <span className="badge bg-warning position-absolute top-0 end-0 m-2">
+                    ARCHIVE
+                  </span>
+                )}
                 <p>{note.content}</p>
                 <div className="etiquetas">
                   {note.tags.map((tag: tagsi) => (
@@ -121,6 +135,10 @@ function Note() {
                       {tag.name}
                     </span>
                   ))}
+                </div>
+                {/* Fecha de creación en la esquina inferior derecha */}
+                <div className="text-muted small position-absolute bottom-0 end-0 m-2">
+                  {new Date(note.created_at).toLocaleDateString()}
                 </div>
               </div>
             </div>

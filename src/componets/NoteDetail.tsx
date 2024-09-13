@@ -7,6 +7,7 @@ interface Note {
   content: string;
   tags: tagsi[];
   is_archived: boolean;
+  created_at: string; // Asegúrate de que el campo de fecha exista en la respuesta de la API
 }
 
 interface tagsi {
@@ -20,6 +21,7 @@ function NoteDetail() {
   const queryClient = useQueryClient();
   const [newContent, setNewContent] = useState(""); // Estado para el nuevo contenido
   const [activeTags, setActiveTags] = useState<tagsi[]>([]); // Estado para los tags activos
+  const [createdAt, setCreatedAt] = useState<string | null>(null); // Estado para almacenar la fecha de creación
 
   // Fetch la nota actual
   const { isLoading, isError, data } = useQuery<Note>({
@@ -44,6 +46,7 @@ function NoteDetail() {
     if (data) {
       setNewContent(data.content); // Setear el contenido al cargar la nota
       setActiveTags(data.tags); // Setear las tags activas al cargar la nota
+      setCreatedAt(data.created_at); // Guardar la fecha de creación
     }
   }, [data]);
 
@@ -111,6 +114,15 @@ function NoteDetail() {
     });
   };
 
+  // Formatear la fecha
+  const formattedDate = createdAt
+    ? new Date(createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       {/* Flecha de regreso */}
@@ -175,6 +187,11 @@ function NoteDetail() {
           <p className="d-flex justify-content-center align-items-center">
             Click for add or remove
           </p>
+        </div>
+
+        {/* Fecha de creación en la parte inferior derecha */}
+        <div className="position-absolute bottom-0 end-0 m-2">
+          <small>Created on: {formattedDate}</small>
         </div>
       </div>
     </div>
