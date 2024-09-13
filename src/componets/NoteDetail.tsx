@@ -31,7 +31,7 @@ function NoteDetail() {
   const updateNoteMutation = useMutation({
     mutationFn: (updatedNote: Note) => {
       return fetch(`http://localhost:3000/notes/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -74,7 +74,7 @@ function NoteDetail() {
       deleteNoteMutation.mutate();
     }
   };
-
+  console.log("data:", data);
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       {/* Flecha de regreso */}
@@ -101,7 +101,7 @@ function NoteDetail() {
       </button>
 
       {/* Nota editable */}
-      <div className="post-it bg-warning p-4">
+      <div className="post-it p-4">
         <textarea
           className="sticky taped"
           value={newContent}

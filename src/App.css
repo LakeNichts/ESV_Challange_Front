@@ -29,6 +29,7 @@ body {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 .sticky.taped:after {
   display: block;
@@ -78,4 +79,39 @@ body {
   -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
   -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
   box-shadow: 0px 0 3px rgba(0,0,0,0.1);  
+}
+
+
+.etiquetas{
+  position: relative;
+    top: 34px;
+}
+
+.etiqueta{
+  margin-right: 2px;
+}
+
+.add-note {
+  height: 114px;
+  width: 100px;
+  margin-top: 80px;
+  border: none;
+  outline: none;
+  background-color: #F4F39E;
+  border-radius: 10px;
+  font-size: 69px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bg-primary-un {
+  color: black !important;
+  border-style: solid;
+}
+
+.bg-primary-espace{
+  position: relative;
+  top: -8px;
+  margin-right: 8px;
 }
